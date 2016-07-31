@@ -1,9 +1,7 @@
 
 import scrapy
 from qiubai.items import QiubaiItem
-import sys
 
-sys.setdefaultencoding( "utf-8" )
 
 class qiubaiSpider(scrapy.Spider):
 
@@ -65,9 +63,9 @@ class qiubaiSpider(scrapy.Spider):
         comments = []
         for block in response.xpath("//div[starts-with(@class,'comment-block clearfix floor')]"):
             author = block.xpath("./div[2]/a/text()").extract()[0] if block.xpath("./div[2]/a/text()") else ""
-            author = author.decode('unicode-escape').encode('ascii','ignore')
+            #author = author.decode('unicode-escape').encode('ascii','ignore')
             comment = block.xpath("./div[2]/span/text()").extract()[0] if block.xpath("./div[2]/span/text()") else ""
-            comments.append({author:comment})
+            comments.append({"comment_author":author,"comment_content":comment})
         item["comment"] = comments
         yield item
 

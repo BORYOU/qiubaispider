@@ -28,5 +28,5 @@ class QiubaiPipeline(object):
 
     def process_item(self, item, spider):
         collection_name = item.__class__.__name__
-        self.db[collection_name].insert(dict(item))
+        self.db[collection_name].insert(dict(item),check_keys=False)
         return item
